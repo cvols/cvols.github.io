@@ -313,6 +313,30 @@ section:last-child {
     padding: .15rem .6rem;
 }
 
+/* Projects in sidebar (narrow column) */
+.projects-sidebar .project-card {
+    padding: .75rem .85rem;
+}
+
+.projects-sidebar .project-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .4rem;
+}
+
+.projects-sidebar .project-link {
+    white-space: normal;
+    line-height: 1.25;
+}
+
+.projects-sidebar .project-name {
+    font-size: .88rem;
+}
+
+.projects-sidebar .project-desc {
+    font-size: .8rem;
+}
+
 /* ── Sidebar: Skills ── */
 .skill-group {
     margin-bottom: 1.1rem;
