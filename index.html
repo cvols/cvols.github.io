@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christopher Volonnino — Senior Software Engineer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:       #2563EB;
+      --blue-light: #EFF6FF;
+      --blue-mid:   #BFDBFE;
+      --slate-900:  #0F172A;
+      --slate-700:  #334155;
+      --slate-500:  #64748B;
+      --slate-300:  #CBD5E1;
+      --slate-100:  #F1F5F9;
+      --white:      #FFFFFF;
+      --radius:     6px;
+      --gap:        1.5rem;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--slate-700);
+      background: var(--slate-100);
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 860px;
+      margin: 2.5rem auto;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 4px 32px rgba(15,23,42,.08);
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--slate-900);
+      color: var(--white);
+      padding: 2.5rem 3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .header-left h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      color: var(--white);
+    }
+
+    .header-left .title {
+      margin-top: .25rem;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--blue-mid);
+    }
+
+    /* Stretch rows to the width of the longest line, then right-align icon + text so
+       every line ends on the same vertical edge (avoids “jagged” URLs). */
+    .header-links {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: .4rem;
+    }
+
+    .header-links a {
+      color: var(--slate-300);
+      text-decoration: none;
+      font-size: .85rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: .35rem;
+      transition: color .18s;
+    }
+
+    .header-links a:hover { color: var(--white); }
+
+    /* Icons: Heroicons (envelope) & Simple Icons (GitHub, LinkedIn) — all 24×24 viewBox */
+    .header-links a svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .header-links a svg path {
+      fill: currentColor;
+    }
+
+    /* ── Body layout ── */
+    .body {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 0;
+    }
+
+    .main-col {
+      padding: 2rem 2.5rem 2.5rem 3rem;
+      border-right: 1px solid var(--slate-100);
+    }
+
+    .side-col {
+      padding: 2rem 2rem 2.5rem;
+      background: var(--slate-100);
+    }
+
+    /* ── Sections ── */
+    section { margin-bottom: var(--gap); }
+    section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: .75rem;
+      padding-bottom: .4rem;
+      border-bottom: 2px solid var(--blue-light);
+    }
+
+    /* Summary */
+    .summary p {
+      color: var(--slate-700);
+      font-size: .925rem;
+    }
+
+    /* Experience */
+    .exp-item { margin-bottom: 1.25rem; }
+    .exp-item:last-child { margin-bottom: 0; }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    .exp-role {
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--slate-900);
+    }
+
+    .exp-date {
+      font-size: .8rem;
+      color: var(--slate-500);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .exp-company {
+      font-size: .85rem;
+      color: var(--blue);
+      margin-top: .1rem;
+      margin-bottom: .5rem;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      padding: 0;
+    }
+
+    .exp-bullets li {
+      font-size: .875rem;
+      color: var(--slate-700);
+      padding-left: 1rem;
+      position: relative;
+      margin-bottom: .3rem;
+    }
+
+    .exp-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-size: .75rem;
+      top: 2px;
+    }
+
+    /* Projects */
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--slate-300);
+      border-radius: var(--radius);
+      padding: .9rem 1rem;
+      margin-bottom: .75rem;
+      transition: border-color .18s, transform .18s, box-shadow .18s;
+      cursor: default;
+    }
+
+    .project-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,99,235,.1);
+    }
+
+    .project-card:last-child { margin-bottom: 0; }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .35rem;
+    }
+
+    .project-name {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--slate-900);
+    }
+
+    .project-link {
+      font-size: .78rem;
+      color: var(--blue);
+      text-decoration: none;
+      border: 1px solid var(--blue-mid);
+      border-radius: 20px;
+      padding: .1rem .6rem;
+      transition: background .18s, color .18s;
+      white-space: nowrap;
+    }
+
+    .project-link:hover {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .project-desc {
+      font-size: .845rem;
+      color: var(--slate-700);
+      margin-bottom: .5rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+    }
+
+    .tag {
+      font-size: .72rem;
+      font-weight: 500;
+      background: var(--blue-light);
+      color: var(--blue);
+      border-radius: 20px;
+      padding: .15rem .6rem;
+    }
+
+    /* ── Sidebar: Skills ── */
+    .skill-group { margin-bottom: 1.1rem; }
+    .skill-group:last-child { margin-bottom: 0; }
+
+    .skill-group-label {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--slate-500);
+      margin-bottom: .4rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+    }
+
+    .skill-pill {
+      font-size: .78rem;
+      background: var(--white);
+      border: 1px solid var(--slate-300);
+      border-radius: 4px;
+      padding: .2rem .55rem;
+      color: var(--slate-700);
+      transition: border-color .15s, color .15s;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    /* Education (sidebar) */
+    .edu-item { margin-bottom: 1rem; }
+    .edu-item:last-child { margin-bottom: 0; }
+
+    .edu-degree {
+      font-weight: 600;
+      font-size: .88rem;
+      color: var(--slate-900);
+    }
+
+    .edu-school {
+      font-size: .82rem;
+      color: var(--blue);
+    }
+
+    .edu-date {
+      font-size: .78rem;
+      color: var(--slate-500);
+      margin-top: .1rem;
+    }
+
+    /* Contact (sidebar) */
+    .contact-item {
+      font-size: .83rem;
+      color: var(--slate-700);
+      margin-bottom: .4rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .contact-item a {
+      color: var(--blue);
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+
+    .contact-item a:hover { opacity: .7; }
+
+    .contact-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      display: block;
+      color: var(--slate-500);
+    }
+
+    .contact-icon path {
+      fill: currentColor;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      .page { margin: 0; border-radius: 0; box-shadow: none; }
+      header { padding: 1.75rem 1.5rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      /* Full-width link column so rows still share one right edge when stacked */
+      .header-links { width: 100%; align-self: stretch; }
+      .body { grid-template-columns: 1fr; }
+      .main-col { padding: 1.5rem 1.5rem; border-right: none; }
+      .side-col { padding: 1.5rem 1.5rem; border-top: 1px solid var(--slate-300); }
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; font-size: 13px; }
+      .page { max-width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+      header { background: var(--slate-900) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .body { grid-template-columns: 1fr 220px; }
+      .project-card { break-inside: avoid; }
+      .exp-item { break-inside: avoid; }
+      a { text-decoration: none; }
+      .project-link, .project-card:hover { transform: none; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header>
+      <div class="header-left">
+        <h1>Christopher Volonnino</h1>
+        <p class="title">Senior Software Engineer</p>
+      </div>
+      <div class="header-links">
+        <a href="mailto:chris.volonnino@gmail.com">
+          <!-- Heroicons v2 solid envelope — MIT -->
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 8.6691V17.25C1.5 18.9069 2.84315 20.25 4.5 20.25H19.5C21.1569 20.25 22.5 18.9069 22.5 17.25V8.6691L13.5723 14.1631C12.6081 14.7564 11.3919 14.7564 10.4277 14.1631L1.5 8.6691Z"/><path d="M22.5 6.90783V6.75C22.5 5.09315 21.1569 3.75 19.5 3.75H4.5C2.84315 3.75 1.5 5.09315 1.5 6.75V6.90783L11.2139 12.8856C11.696 13.1823 12.304 13.1823 12.7861 12.8856L22.5 6.90783Z"/></svg>
+          chris.volonnino@gmail.com
+        </a>
+        <a href="https://github.com/cvols" target="_blank" rel="noopener">
+          <!-- Simple Icons — MIT -->
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          github.com/cvols
+        </a>
+        <a href="https://www.linkedin.com/in/chrisvolonnino/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          linkedin.com/in/chrisvolonnino
+        </a>
+      </div>
+    </header>
+
+    <!-- ═══════════════ BODY ═══════════════ -->
+    <div class="body">
+
+      <!-- ── Main Column ── -->
+      <main class="main-col">
+
+        <!-- Summary -->
+        <section class="summary">
+          <h2 class="section-title">Summary</h2>
+          <p>Courteous and enthusiastic full stack developer interested in IT and everything in its orbit. Highly motivated, influenced by well written and organized code along with intricate functionality and subtle animations that bring a web page to life.</p>
+        </section>
+
+        <!-- Experience -->
+        <section>
+          <h2 class="section-title">Work Experience</h2>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Senior Software Engineer</span>
+              <span class="exp-date">Sep 2021 — Present</span>
+            </div>
+            <div class="exp-company">Valtech</div>
+
+            <div class="exp-header" style="margin-top: .85rem;">
+              <span class="exp-role" style="font-size: .88rem;">Metagenics — Fullstack Technical Lead</span>
+              <span class="exp-date">Sep 2023 — Present</span>
+            </div>
+            <p style="font-size: .875rem; color: var(--slate-700); margin: .4rem 0 .5rem;">Metagenics is a global producer of high grade healthcare micronutrition supplements, medical foods, and lifestyle programs for practitioners and patients. Partnering with Valtech, we designed and launched a global e-commerce platform for the U.S. flagship store on a composable MACH stack, moving from a legacy monolith to enable scale into other markets. Objective: full end to end e-commerce for the U.S. site to unlock D2C and B2B2C growth.</p>
+            <p style="font-size: .875rem; color: var(--slate-700); margin: 0 0 .5rem;">Delivered a full commerce experience using Contentful, Commercetools, Algolia, OrderGroove, Next.js, React, GraphQL, PowerReviews, Cybersource, Melissa, Vertex, Vercel, Dynamics 365, AWS S3/Cognito, Datadog, InRiver, Cloudflare, GitHub, Google Pay, PayPal, and Apple Pay.</p>
+            <ul class="exp-bullets">
+              <li>Led the Customer Experience feature team: customer account creation (AWS Cognito + Commercetools), dynamic customer segmentation (B2B/B2C, pricing groups), and practitioner patient relationship modeling.</li>
+              <li>Architected and delivered My Account and the Practitioner Portal—personalized patient recommendations via Commercetools shopping lists, real time analytics dashboards, and downloadable insights.</li>
+            </ul>
+
+            <div class="exp-header" style="margin-top: .85rem;">
+              <span class="exp-role" style="font-size: .88rem;">Connected Experiences Engineer</span>
+              <span class="exp-date">Mar 2023 — Sep 2023</span>
+            </div>
+            <ul class="exp-bullets">
+              <li>Built interactive prototypes and client pitch experiences in Unity real time 3D and immersive interaction design.</li>
+            </ul>
+
+            <div class="exp-header" style="margin-top: .85rem;">
+              <span class="exp-role" style="font-size: .88rem;">M&amp;M Mars — Frontend Engineer, Kiosk Architect</span>
+              <span class="exp-date">Aug 2022 — Mar 2023</span>
+            </div>
+            <p style="font-size: .875rem; color: var(--slate-700); margin: .4rem 0 .5rem;">Mars, Incorporated is a multinational manufacturer of confectionery, pet food, and other food products, and a provider of animal care services.</p>
+            <ul class="exp-bullets">
+              <li>E-commerce development and in store kiosk application architecture.</li>
+              <li>Key contributor to the M&amp;M’s online configurator revamp (candies + packaging) and platform replacement for a stronger UX for customizable M&amp;M’s.</li>
+              <li>Collaborated on a next generation in store kiosk using Next.js, React, Node.js, and Apollo GraphQL.</li>
+            </ul>
+
+            <div class="exp-header" style="margin-top: .85rem;">
+              <span class="exp-role" style="font-size: .88rem;">Connected Experiences Engineer · CxP Lab</span>
+              <span class="exp-date">Mar 2022 — Jul 2022</span>
+            </div>
+            <ul class="exp-bullets">
+              <li>Explored physical digital convergence through rapid prototyping and emerging tech; shipped prototypes and POCs for mobile web AR/VR to help clients envision future state experiences.</li>
+            </ul>
+
+            <div class="exp-header" style="margin-top: .85rem;">
+              <span class="exp-role" style="font-size: .88rem;">GoodEggs — Fullstack Web &amp; Mobile Engineer</span>
+              <span class="exp-date">Sep 2021 — Feb 2022</span>
+            </div>
+            <p style="font-size: .875rem; color: var(--slate-700); margin: .4rem 0 .5rem;">Online grocery delivery in the Bay Area and Los Angeles—web, iOS, and Android.</p>
+            <ul class="exp-bullets">
+              <li>Customer pod focused on attribution tracking user behavior on web and mobile to inform UX and business decisions.</li>
+              <li>Implemented mobile notifications for abandoned carts and order reminders.</li>
+              <li>Worked with third parties on SEO; expanded from San Francisco to Los Angeles with new zip code flow and shopping experience.</li>
+              <li>CMS enhancements for home page banners by signed in vs signed out state.</li>
+              <li>Bug fixes and performance optimization across web and mobile.</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Senior React Engineer</span>
+              <span class="exp-date">Nov 2019 — Aug 2021</span>
+            </div>
+            <div class="exp-company">Merck · Branchburg, New Jersey</div>
+            <p style="font-size: .875rem; color: var(--slate-700); margin: .35rem 0 .5rem;">Merck aspires to be the premier research intensive biopharmaceutical company in the world.</p>
+            <ul class="exp-bullets">
+              <li>Designed and developed custom React components with HTML5, CSS3, JavaScript, and JSX; customized Material UI for faster delivery.</li>
+              <li>Applied React best practices to improve execution and functionality; mentored a junior developer and performed Technical Lead and Project Manager responsibilities.</li>
+              <li>Promoted best practices across developers; planned, architected, and built JavaScript web applications from the ground up.</li>
+              <li>Project planning, realistic estimates, Jira tracking; partnered with business and end users on specs and system design.</li>
+              <li>Handled high pressure situations and production issues; backlog negotiation and estimation; strong organization, communication, and coordination.</li>
+              <li>Partnered with QA on defects via ticketing; maintained projects through client side integration.</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">eComm Engineer</span>
+              <span class="exp-date">Jul 2018 — Nov 2019</span>
+            </div>
+            <div class="exp-company">EXPRESS · Columbus, Ohio</div>
+            <p style="font-size: .875rem; color: var(--slate-700); margin: .35rem 0 .5rem;">American fashion retailer for young men and women.</p>
+            <ul class="exp-bullets">
+              <li>Built and tested accessible React components (HTML5, CSS3, JavaScript, JSX) for express.com and an internal store associate app.</li>
+              <li>Worked with Scrum Masters, PMs, BAs, and QA across the SDLC; Agile/Scrum delivery with regular stakeholder updates.</li>
+              <li>Responsive applications for desktop, tablet, and mobile; customized components (carousels, accordions, modals, forms, icons, dropdowns, and more).</li>
+              <li>On call support for production incidents; GraphQL API integration; Redux state management; partnered with backend on APIs.</li>
+              <li>Git/GitHub, Jira for defects, Jest and Enzyme for unit tests, debugging and bug fixes.</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">JavaScript Developer</span>
+              <span class="exp-date">Apr 2018 — Jun 2020</span>
+            </div>
+            <div class="exp-company">eg+ Worldwide · Jersey City, New Jersey</div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Account Manager</span>
+              <span class="exp-date">Mar 2015 — Nov 2017</span>
+            </div>
+            <div class="exp-company">Apex Systems · Short Hills, New Jersey</div>
+          </div>
+        </section>
+
+        <!-- Projects -->
+        <section>
+          <h2 class="section-title">Projects</h2>
+
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">Metagenics global e-commerce (MACH)</span>
+              <span class="project-link" style="cursor: default; border-style: dashed; opacity: .85;">Lead</span>
+            </div>
+            <p class="project-desc">Composable commerce platform for the U.S. flagship—account and practitioner experiences, integrations across content, search, subscriptions, payments, tax, and observability on Vercel and AWS.</p>
+            <div class="project-tags">
+              <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">GraphQL</span><span class="tag">Commercetools</span><span class="tag">Contentful</span><span class="tag">Algolia</span><span class="tag">AWS</span><span class="tag">Vercel</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">M&amp;M’s configurator &amp; in-store kiosk</span>
+              <span class="project-link" style="cursor: default; border-style: dashed; opacity: .85;">Mars</span>
+            </div>
+            <p class="project-desc">E-commerce and kiosk architecture for the online candy-and-packaging configurator and next-generation retail kiosk experience.</p>
+            <div class="project-tags">
+              <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Apollo GraphQL</span>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- ── Sidebar ── -->
+      <aside class="side-col">
+
+        <!-- Contact -->
+        <section>
+          <h2 class="section-title">Contact</h2>
+          <div class="contact-item">
+            <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 8.6691V17.25C1.5 18.9069 2.84315 20.25 4.5 20.25H19.5C21.1569 20.25 22.5 18.9069 22.5 17.25V8.6691L13.5723 14.1631C12.6081 14.7564 11.3919 14.7564 10.4277 14.1631L1.5 8.6691Z"/><path d="M22.5 6.90783V6.75C22.5 5.09315 21.1569 3.75 19.5 3.75H4.5C2.84315 3.75 1.5 5.09315 1.5 6.75V6.90783L11.2139 12.8856C11.696 13.1823 12.304 13.1823 12.7861 12.8856L22.5 6.90783Z"/></svg>
+            <a href="mailto:chris.volonnino@gmail.com">chris.volonnino@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 4.5C1.5 2.84315 2.84315 1.5 4.5 1.5H5.87163C6.732 1.5 7.48197 2.08556 7.69064 2.92025L8.79644 7.34343C8.97941 8.0753 8.70594 8.84555 8.10242 9.29818L6.8088 10.2684C6.67447 10.3691 6.64527 10.5167 6.683 10.6197C7.81851 13.7195 10.2805 16.1815 13.3803 17.317C13.4833 17.3547 13.6309 17.3255 13.7316 17.1912L14.7018 15.8976C15.1545 15.2941 15.9247 15.0206 16.6566 15.2036L21.0798 16.3094C21.9144 16.518 22.5 17.268 22.5 18.1284V19.5C22.5 21.1569 21.1569 22.5 19.5 22.5H17.25C8.55151 22.5 1.5 15.4485 1.5 6.75V4.5Z"/></svg>
+            (908) 347-8101
+          </div>
+          <div class="contact-item">
+            <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5397 22.351C11.57 22.3685 11.5937 22.3821 11.6105 22.3915L11.6384 22.4071C11.8613 22.5294 12.1378 22.5285 12.3608 22.4075L12.3895 22.3915C12.4063 22.3821 12.43 22.3685 12.4603 22.351C12.5207 22.316 12.607 22.265 12.7155 22.1982C12.9325 22.0646 13.2388 21.8676 13.6046 21.6091C14.3351 21.0931 15.3097 20.3274 16.2865 19.3273C18.2307 17.3368 20.25 14.3462 20.25 10.5C20.25 5.94365 16.5563 2.25 12 2.25C7.44365 2.25 3.75 5.94365 3.75 10.5C3.75 14.3462 5.76932 17.3368 7.71346 19.3273C8.69025 20.3274 9.66491 21.0931 10.3954 21.6091C10.7612 21.8676 11.0675 22.0646 11.2845 22.1982C11.393 22.265 11.4793 22.316 11.5397 22.351ZM12 13.5C13.6569 13.5 15 12.1569 15 10.5C15 8.84315 13.6569 7.5 12 7.5C10.3431 7.5 9 8.84315 9 10.5C9 12.1569 10.3431 13.5 12 13.5Z"/></svg>
+            Randolph, NJ
+          </div>
+        </section>
+
+        <!-- Skills -->
+        <section>
+          <h2 class="section-title">Technical Skills</h2>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Frontend</div>
+            <div class="skill-pills">
+              <span class="skill-pill">React.js</span>
+              <span class="skill-pill">Next.js</span>
+              <span class="skill-pill">TypeScript</span>
+              <span class="skill-pill">HTML5</span>
+              <span class="skill-pill">CSS3</span>
+              <span class="skill-pill">JavaScript</span>
+              <span class="skill-pill">GraphQL</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Platform &amp; Cloud</div>
+            <div class="skill-pills">
+              <span class="skill-pill">Vercel</span>
+              <span class="skill-pill">Node.js</span>
+              <span class="skill-pill">AWS</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Commerce &amp; Data</div>
+            <div class="skill-pills">
+              <span class="skill-pill">Commercetools</span>
+              <span class="skill-pill">Convex</span>
+              <span class="skill-pill">Supabase</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Education -->
+        <section>
+          <h2 class="section-title">Education</h2>
+          <div class="edu-item">
+            <div class="edu-degree">Rutgers Coding Bootcamp</div>
+            <div class="edu-school">Jersey City, New Jersey</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-degree">University of Delaware</div>
+            <div class="edu-school">Newark, Delaware</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-degree">Delbarton</div>
+            <div class="edu-school">Morristown, New Jersey</div>
+          </div>
+        </section>
+
+        <!-- Interests -->
+        <section>
+          <h2 class="section-title">Interests</h2>
+          <div class="skill-pills">
+            <span class="skill-pill">3D Printing</span>
+            <span class="skill-pill">PC Building</span>
+            <span class="skill-pill">Ice Hockey</span>
+            <span class="skill-pill">Golf</span>
+            <span class="skill-pill">Tennis</span>
+            <span class="skill-pill">Pickleball</span>
+            <span class="skill-pill">Pokemon Cards</span>
+          </div>
+        </section>
+
+      </aside>
+
+    </div>
+  </div>
+</body>
+</html>
