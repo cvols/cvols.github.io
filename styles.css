@@ -473,7 +473,8 @@ section:last-child {
 @media print {
     body {
         background: #fff;
-        font-size: 13px;
+        font-size: 12.5px;
+        line-height: 1.45;
     }
 
     .page {
@@ -491,14 +492,63 @@ section:last-child {
 
     .body {
         grid-template-columns: 1fr 220px;
+        /* Avoid stretching the sidebar to the full height of the main column;
+           stretch + pagination often creates empty space in PDF output. */
+        align-items: start;
+    }
+
+    /* Slightly tighten vertical rhythm for PDF pagination */
+    header {
+        padding: 2rem 2.5rem 1.6rem;
+    }
+
+    .main-col {
+        padding: 1.7rem 2.2rem 1.8rem 2.4rem;
+    }
+
+    .side-col {
+        padding: 1.7rem 1.5rem 1.8rem;
+    }
+
+    section {
+        margin-bottom: .85rem;
+    }
+
+    /* Keep "Projects" title with both cards; if the group does not fit the
+       remainder of a page, move the whole block to the next page (print/PDF). */
+    .projects-sidebar {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Keep Commerce & Data label with its pill row in PDF output */
+    .skill-group--print-keep {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 
     .project-card {
         break-inside: avoid;
     }
 
+    /* Large blocks must be allowed to split across pages; avoid-page on whole roles leaves huge gaps when a job does not fit on the remainder of a page. */
     .exp-item {
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    /* Keep small logical units together without blocking entire jobs */
+    .exp-header {
         break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .exp-item {
+        margin-bottom: .9rem;
+    }
+
+    .exp-bullets li {
+        margin-bottom: .15rem;
     }
 
     a {
